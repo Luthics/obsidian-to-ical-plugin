@@ -73,11 +73,11 @@ export class IcalService {
       if (times) {
         let dtstart = task.getDate(null, "YYYYMMDD");
         let dtend = task.getDate(null, "YYYYMMDD");
-        if (task.hasA("Scheduled")) {
-          dtstart = task.getDate("Scheduled", "YYYYMMDD");
+        if (task.hasA(TaskDateName.Scheduled)) {
+          dtstart = task.getDate(TaskDateName.Scheduled, "YYYYMMDD");
         }
-        if (task.hasA("Due")) {
-          dtend = task.getDate("Due", "YYYYMMDD");
+        if (task.hasA(TaskDateName.Due)) {
+          dtend = task.getDate(TaskDateName.Due, "YYYYMMDD");
         }
         event += `DTSTART:${dtstart}T${times.start}\r\n`;
         event += `DTEND:${dtend}T${times.end}\r\n`;
@@ -85,17 +85,17 @@ export class IcalService {
         switch (settings.howToProcessMultipleDates) {
           case "PreferScheduledDate":
             if (task.hasA(
-              "Scheduled"
+              TaskDateName.Scheduled
               /* Scheduled */
             )) {
-              event += "DTSTART:" + task.getDate("Scheduled", "YYYYMMDDTHHmmss") + "\r\n";
-              event += "DTEND:" + this.add30Minutes(task.getDate("Scheduled", "YYYYMMDDTHHmmss"), 30) + "\r\n";
+              event += "DTSTART:" + task.getDate(TaskDateName.Scheduled, "YYYYMMDDTHHmmss") + "\r\n";
+              event += "DTEND:" + this.add30Minutes(task.getDate(TaskDateName.Scheduled, "YYYYMMDDTHHmmss")) + "\r\n";
             } else if (task.hasA(
               "Due"
               /* Due */
             )) {
               event += "DTSTART:" + task.getDate("Due", "YYYYMMDDTHHmmss") + "\r\n";
-              event += "DTEND:" + this.add30Minutes(task.getDate("Due", "YYYYMMDDTHHmmss"), 30) + "\r\n";
+              event += "DTEND:" + this.add30Minutes(task.getDate("Due", "YYYYMMDDTHHmmss")) + "\r\n";
             } else if (task.hasA(
               "TimeStart"
               /* TimeStart */
