@@ -71,8 +71,8 @@ export class IcalService {
     const defaultdate = task.getDate(null, "YYYYMMDD");
     if (date === null) {
       if (times) {
-        const dtstart = task.getDate(null, "YYYYMMDD");
-        const dtend = task.getDate(null, "YYYYMMDD");
+        let dtstart = task.getDate(null, "YYYYMMDD");
+        let dtend = task.getDate(null, "YYYYMMDD");
         if (task.hasA("Scheduled")) {
           dtstart = task.getDate("Scheduled", "YYYYMMDD");
         }
