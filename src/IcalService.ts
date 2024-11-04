@@ -36,7 +36,7 @@ export class IcalService {
     const date = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`);
     date.setMinutes(date.getMinutes() + 30);
 
-    const pad = (num) => String(num).padStart(2, '0');
+    const pad = (num: number) => String(num).padStart(2, '0');
 
     const newYear = date.getFullYear();
     const newMonth = pad(date.getMonth() + 1);
@@ -142,28 +142,28 @@ export class IcalService {
               TaskDateName.Due
               /* Due */
             )) {
-              event += "DTSTART:" + task.getDate("Scheduled", "YYYYMMDDTHHmmss") + "\r\nDTEND:" + task.getDate("Due", "YYYYMMDDTHHmmss") + "\r\n";
+              event += "DTSTART:" + task.getDate(TaskDateName.Scheduled, "YYYYMMDDTHHmmss") + "\r\nDTEND:" + task.getDate(TaskDateName.Due, "YYYYMMDDTHHmmss") + "\r\n";
             } else if (task.hasA(
               TaskDateName.Due
               /* Due */
             )) {
-              event += "DTSTART:" + task.getDate("Due", "YYYYMMDDTHHmmss") + "\r\n";
-              event += "DTEND:" + this.add30Minutes(task.getDate("Due", "YYYYMMDDTHHmmss")) + "\r\n";
+              event += "DTSTART:" + task.getDate(TaskDateName.Due, "YYYYMMDDTHHmmss") + "\r\n";
+              event += "DTEND:" + this.add30Minutes(task.getDate(TaskDateName.Due, "YYYYMMDDTHHmmss")) + "\r\n";
             } else if (task.hasA(
-              "Scheduled"
+              TaskDateName.Scheduled
               /* Scheduled */
             )) {
-              event += "DTSTART:" + task.getDate("Scheduled", "YYYYMMDDTHHmmss") + "\r\n";
-              event += "DTEND:" + this.add30Minutes(task.getDate("Scheduled", "YYYYMMDDTHHmmss")) + "\r\n";
+              event += "DTSTART:" + task.getDate(TaskDateName.Scheduled, "YYYYMMDDTHHmmss") + "\r\n";
+              event += "DTEND:" + this.add30Minutes(task.getDate(TaskDateName.Scheduled, "YYYYMMDDTHHmmss")) + "\r\n";
             } else if (task.hasA(
-              "TimeStart"
+              TaskDateName.TimeStart
               /* TimeStart */
             ) && task.hasA(
-              "TimeEnd"
+              TaskDateName.TimeEnd
               /* TimeEnd */
             )) {
-              event += "DTSTART:" + task.getDate("TimeStart", "YYYYMMDD[T]HHmmss[Z]") + "\r\n";
-              event += "DTEND:" + task.getDate("TimeEnd", "YYYYMMDD[T]HHmmss[Z]") + "\r\n";
+              event += "DTSTART:" + task.getDate(TaskDateName.TimeStart, "YYYYMMDD[T]HHmmss[Z]") + "\r\n";
+              event += "DTEND:" + task.getDate(TaskDateName.TimeEnd, "YYYYMMDD[T]HHmmss[Z]") + "\r\n";
             } else {
               event += "DTSTART:" + task.getDate(null, "YYYYMMDDTHHmmss") + "\r\n";
               event += "DTEND:" + this.add30Minutes(task.getDate(null, "YYYYMMDDTHHmmss")) + "\r\n";
@@ -178,7 +178,7 @@ export class IcalService {
         event += `times:${times}\r\n`;
       } else {
         event += `DTSTART:${date}\r\n`;
-        event += `DTEND:${this.add30Minutes(date, 30)}\r\n`;
+        event += `DTEND:${this.add30Minutes(date)}\r\n`;
       }
     }
     event += "SUMMARY:" + prependSummary + task.getSummary() + '\r\nLOCATION:ALTREP="' + encodeURI(task.getLocation()) + '":' + encodeURI(task.getLocation()) + "\r\nEND:VEVENT\r\n";
