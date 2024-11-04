@@ -154,7 +154,7 @@ export class IcalService {
               /* Scheduled */
             )) {
               event += "DTSTART:" + task.getDate("Scheduled", "YYYYMMDDTHHmmss") + "\r\n";
-              event += "DTEND:" + this.add30Minutes(task.getDate("Scheduled", "YYYYMMDDTHHmmss"), 30) + "\r\n";
+              event += "DTEND:" + this.add30Minutes(task.getDate("Scheduled", "YYYYMMDDTHHmmss")) + "\r\n";
             } else if (task.hasA(
               "TimeStart"
               /* TimeStart */
@@ -166,7 +166,7 @@ export class IcalService {
               event += "DTEND:" + task.getDate("TimeEnd", "YYYYMMDD[T]HHmmss[Z]") + "\r\n";
             } else {
               event += "DTSTART:" + task.getDate(null, "YYYYMMDDTHHmmss") + "\r\n";
-              event += "DTEND:" + this.add30Minutes(task.getDate(null, "YYYYMMDDTHHmmss"), 30) + "\r\n";
+              event += "DTEND:" + this.add30Minutes(task.getDate(null, "YYYYMMDDTHHmmss")) + "\r\n";
             }
             break;
         }
