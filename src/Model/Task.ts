@@ -116,7 +116,7 @@ export class Task {
       }
 
       // 格式化为 hhmmss
-      const formatTime = (time) => {
+      const formatTime = (time: string) => {
         const [hours, minutes, seconds] = time.split(':');
         return `${hours}${minutes}${seconds}`;
       };

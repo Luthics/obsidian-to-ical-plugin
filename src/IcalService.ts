@@ -91,44 +91,44 @@ export class IcalService {
               event += "DTSTART:" + task.getDate(TaskDateName.Scheduled, "YYYYMMDDTHHmmss") + "\r\n";
               event += "DTEND:" + this.add30Minutes(task.getDate(TaskDateName.Scheduled, "YYYYMMDDTHHmmss")) + "\r\n";
             } else if (task.hasA(
-              "Due"
+              TaskDateName.Due
               /* Due */
             )) {
-              event += "DTSTART:" + task.getDate("Due", "YYYYMMDDTHHmmss") + "\r\n";
-              event += "DTEND:" + this.add30Minutes(task.getDate("Due", "YYYYMMDDTHHmmss")) + "\r\n";
+              event += "DTSTART:" + task.getDate(TaskDateName.Due, "YYYYMMDDTHHmmss") + "\r\n";
+              event += "DTEND:" + this.add30Minutes(task.getDate(TaskDateName.Due, "YYYYMMDDTHHmmss")) + "\r\n";
             } else if (task.hasA(
-              "TimeStart"
+              TaskDateName.TimeStart
               /* TimeStart */
             ) && task.hasA(
-              "TimeEnd"
+              TaskDateName.TimeEnd
               /* TimeEnd */
             )) {
-              event += "DTSTART:" + task.getDate("TimeStart", "YYYYMMDD[T]HHmmss[Z]") + "\r\n";
-              event += "DTEND:" + task.getDate("TimeEnd", "YYYYMMDD[T]HHmmss[Z]") + "\r\n";
+              event += "DTSTART:" + task.getDate(TaskDateName.TimeStart, "YYYYMMDD[T]HHmmss[Z]") + "\r\n";
+              event += "DTEND:" + task.getDate(TaskDateName.TimeEnd, "YYYYMMDD[T]HHmmss[Z]") + "\r\n";
             } else {
               event += "DTSTART:" + task.getDate(null, "YYYYMMDDTHHmmss") + "\r\n";
-              event += "DTEND:" + this.add30Minutes(task.getDate(null, "YYYYMMDDTHHmmss"), 30) + "\r\n";
+              event += "DTEND:" + this.add30Minutes(task.getDate(null, "YYYYMMDDTHHmmss")) + "\r\n";
             }
             break;
           case "CreateMultipleEvents":
             event = "";
             if (task.hasA(
-              "Start"
+              TaskDateName.Start
               /* Start */
             )) {
-              event += this.getEvent(task, task.getDate("Start", "YYYYMMDDTHHmmss"), "\u{1F6EB} ");
+              event += this.getEvent(task, task.getDate(TaskDateName.Start, "YYYYMMDDTHHmmss"), "\u{1F6EB} ");
             }
             if (task.hasA(
-              "Scheduled"
+              TaskDateName.Scheduled
               /* Scheduled */
             )) {
-              event += this.getEvent(task, task.getDate("Scheduled", "YYYYMMDDTHHmmss"), "\u23F3 ");
+              event += this.getEvent(task, task.getDate(TaskDateName.Scheduled, "YYYYMMDDTHHmmss"), "\u23F3 ");
             }
             if (task.hasA(
-              "Due"
+              TaskDateName.Due
               /* Due */
             )) {
-              event += this.getEvent(task, task.getDate("Due", "YYYYMMDDTHHmmss"), "\u{1F4C5} ");
+              event += this.getEvent(task, task.getDate(TaskDateName.Due, "YYYYMMDDTHHmmss"), "\u{1F4C5} ");
             }
             if (event === "") {
               event += this.getEvent(task, task.getDate(null, "YYYYMMDDTHHmmss"), "");
@@ -136,19 +136,19 @@ export class IcalService {
             return event;
           case "PreferDueDate":
             if (task.hasA(
-              "Scheduled"
+              TaskDateName.Scheduled
               /* Scheduled */
             ) && task.hasA(
-              "Due"
+              TaskDateName.Due
               /* Due */
             )) {
               event += "DTSTART:" + task.getDate("Scheduled", "YYYYMMDDTHHmmss") + "\r\nDTEND:" + task.getDate("Due", "YYYYMMDDTHHmmss") + "\r\n";
             } else if (task.hasA(
-              "Due"
+              TaskDateName.Due
               /* Due */
             )) {
               event += "DTSTART:" + task.getDate("Due", "YYYYMMDDTHHmmss") + "\r\n";
-              event += "DTEND:" + this.add30Minutes(task.getDate("Due", "YYYYMMDDTHHmmss"), 30) + "\r\n";
+              event += "DTEND:" + this.add30Minutes(task.getDate("Due", "YYYYMMDDTHHmmss")) + "\r\n";
             } else if (task.hasA(
               "Scheduled"
               /* Scheduled */
